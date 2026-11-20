@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
+import { SITE_LOGO } from '../utils/siteConfig';
 
 const inputClass = 'w-full py-3 rounded-xl border bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:border-transparent transition';
 
@@ -84,7 +85,7 @@ const AuthLayout = ({ title, subtitle, side, children, footer }) => (
                 <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-purple-500/20 blur-3xl" />
 
                 <div className="relative flex items-center gap-3">
-                    <img src="/Icon.png" alt="" className="w-9 h-9 object-contain" />
+                    <img src={SITE_LOGO} alt="" className="w-9 h-9 object-contain" />
                     <span className="text-xl font-bold">CodeRokers</span>
                 </div>
 

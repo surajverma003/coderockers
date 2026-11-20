@@ -1,10 +1,4 @@
-import { COLLECTION_ID, DATABASE_ID, databases, ID } from '../appwrite/appwrite';
-
-// Appwrite mein "subscribers" naam ka table/collection hona chahiye:
-//   column: email (String, size 255, required)
-//   index: unique on email  (duplicate emails 409 ke saath rok deta hai)
-//   permissions: Any -> sirf Create (Read/Update/Delete nahi), warna sabki emails leak ho sakti hain
-
+import { DATABASE_ID, databases, ID, SUBSCRIBERS_COLLECTION_ID } from '../appwrite/appwrite';
 
 export const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
@@ -13,7 +7,7 @@ export const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(va
 //         { ok: false, code, error }    -> kuch galat hua
 export const subscribeToNewsletter = async (email) => {
     try {
-        await databases.createDocument(DATABASE_ID, COLLECTION_ID, ID.unique(), {
+        await databases.createDocument(DATABASE_ID, SUBSCRIBERS_COLLECTION_ID, ID.unique(), {
             email: email.trim().toLowerCase(),
         });
         return { ok: true, already: false };

@@ -18,6 +18,7 @@ const CardImage = ({ src, alt, category }) => {
             src={src}
             alt={alt}
             loading="lazy"
+            decoding="async"
             onError={() => setFailed(true)}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

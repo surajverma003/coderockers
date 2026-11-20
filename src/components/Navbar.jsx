@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Search, Moon, Sun, Menu, X, LogOut } from 'lucide-react';
-
 import { SITE_NAME, SITE_LOGO } from '../utils/siteConfig';
+
 import { focusRing } from '../data/homeData';
 import { navLinks, iconBtn, desktopLinkClass, mobileLinkClass } from '../data/navbarData';
 import useNavbar from '../hooks/useNavbar';

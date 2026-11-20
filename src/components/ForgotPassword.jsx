@@ -7,7 +7,8 @@ import useForgotPassword from '../hooks/useForgotPassword';
 import AuthLayout, { AuthField, AuthError, AuthSubmit } from '../reuse/AuthLayout';
 
 const ForgotPassword = () => {
-    const { email, sentTo, loading, error, cooldown, successRef, handleEmailChange, handleSubmit, handleResend, chooseDifferentEmail } = useForgotPassword();
+    const { email, sentTo, loading, error, cooldown, successRef, 
+        handleEmailChange, handleSubmit, handleResend, chooseDifferentEmail } = useForgotPassword();
 
     const backToLogin = (
         <Link to="/login" className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded" >

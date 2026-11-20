@@ -1,8 +1,9 @@
 import React from 'react'
-import CardImage from './CardImage';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { formatViews } from '../../utils/blogUtils';
+
+import CardImage from './CardImage';
 
 const PostCard = ({ post, timeFormat }) => (
     <article className="group relative flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-blue-400 dark:hover:border-blue-500/60 hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300">

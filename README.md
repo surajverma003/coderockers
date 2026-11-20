@@ -7,23 +7,31 @@ A full-stack developer blog built with **React**, **Tailwind CSS** and **Appwrit
 ![Appwrite](https://img.shields.io/badge/Appwrite-Cloud-F02E65?logo=appwrite&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
-**[Live demo](https://YOUR-LIVE-LINK)** · **[Source code](https://github.com/YOUR-USERNAME/YOUR-REPO)**
+**[Live demo](https://surajverma003.github.io/coderockers/)** · **[Source code](https://github.com/surajverma003/coderockers)**
 
-![CodeRokers home page](docs/screenshots/home-dark.png)
+![CodeRokers home page](public/screenshots/home-dark.png)
 
 ## Screenshots
 
-| Home (light) | Articles |
-| :---: | :---: |
-| ![Home in light mode](docs/screenshots/home-light.png) | ![Articles list with search and filters](docs/screenshots/blogs.png) |
+### Desktop
 
-| Article page | Editor |
-| :---: | :---: |
-| ![Article with table of contents](docs/screenshots/article.png) | ![Markdown editor with live preview](docs/screenshots/editor.png) |
+| Home (light) | Articles | Article page |
+| :---: | :---: | :---: |
+| ![Home in light mode](public/screenshots/home-light.png) | ![Articles list with search and filters](public/screenshots/blogs.png) | ![Article with table of contents](public/screenshots/article.png) |
 
-| Profile settings | Mobile |
-| :---: | :---: |
-| ![Profile settings](docs/screenshots/profile.png) | ![Mobile layout](docs/screenshots/mobile.png) |
+| Editor | Profile settings | Categories |
+| :---: | :---: | :---: |
+| ![Markdown editor with live preview](public/screenshots/editor.png) | ![Profile settings](public/screenshots/profile.png) | ![Categories](public/screenshots/categories.png) |
+
+### Mobile
+
+| Home | Profile settings | Admin dashboard | Categories | Newsletter |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="public/screenshots/mobile.png" alt="Mobile home" width="130"> | <img src="public/screenshots/mobile/profile.png" alt="Mobile profile settings" width="130"> | <img src="public/screenshots/mobile/admin-dashboard.png" alt="Mobile admin dashboard" width="130"> | <img src="public/screenshots/mobile/categories.png" alt="Mobile categories" width="130"> | <img src="public/screenshots/mobile/newsletter.png" alt="Mobile newsletter" width="130"> |
+
+| Privacy policy | Terms of service |  |  |  |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="public/screenshots/mobile/privacy.png" alt="Mobile privacy policy" width="130"> | <img src="public/screenshots/mobile/terms.png" alt="Mobile terms of service" width="130"> |  |  |  |
 
 ## Features
 
@@ -56,88 +64,6 @@ A full-stack developer blog built with **React**, **Tailwind CSS** and **Appwrit
 | Icons | Iconify, lucide-react |
 | Backend | Appwrite (Auth, Database, optional Storage) |
 | Tooling | Vite |
-
-## Technical highlights
-
-- **Safe Markdown rendering.** The article body is parsed into blocks and rendered as React elements. It never uses `dangerouslySetInnerHTML`, and links only allow `http(s)`, `mailto` and relative URLs, so user content cannot inject scripts.
-- **URL as the source of truth.** Search, category, sort and page live in the query string (`/blogs?search=react&category=technology&page=2`), so links can be shared and the back button behaves.
-- **Fewer database reads.** Posts are cached in context after the first load, and the article page reuses that cache instead of fetching again. Useful on Appwrite's free plan.
-- **Spam and duplicate protection.** The newsletter form has a honeypot field, and a unique index on `email` stops duplicates. Duplicate sign-ups show the same success message, so nobody can check who is subscribed.
-- **Least-privilege permissions** on the `subscribers` and `feedbacks` tables (create only, no read).
-- **Careful auth flows.** The recovery link is read once and removed from the address bar. Google/GitHub users, who have no password, can set one without entering a "current password". Expired and invalid links, expired sessions and rate limits each get their own message.
-- **Better editing experience.** Draft autosave, a "restored draft" banner, unsaved-changes warnings and a sticky save bar.
-
-## Getting started
-
-### Prerequisites
-- Node.js 18 or newer
-- A free [Appwrite Cloud](https://cloud.appwrite.io) project
-
-### 1. Install
-
-```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
-cd YOUR-REPO
-npm install
-```
-
-### 2. Set up Appwrite
-
-**Auth.** Enable *Email/Password*, *Google* and *GitHub* in the Auth settings. Under *Overview → Platforms*, add a Web platform for `localhost` and for your deployed domain. Without this, sign-in and password-reset emails will fail.
-
-**Database.** Create a database, then these three tables. The **Table ID** must match the name below (you can set a custom ID when creating the table).
-
-| Table ID | Columns |
-| --- | --- |
-| `blogpost` | `title` (varchar 100), `content` (text, 8000), `slug` (varchar, with an index), `views` (integer), `author` (varchar), `is_published` (boolean), `image` (varchar, URL), `category` (varchar 50, default `General`), `tags` (varchar 30, **array**) |
-| `feedbacks` | `name`, `email`, `subject`, `message` (all varchar/text) |
-| `subscribers` | `email` (varchar 255, required) and a **unique** index on `email` |
-
-**Permissions** (table Settings → Permissions):
-
-| Table | Role | Allowed |
-| --- | --- | --- |
-| `blogpost` | Any | Read |
-| `blogpost` | All users | Create |
-| `feedbacks` | Any | Create only |
-| `subscribers` | Any | Create only |
-
-> The views counter currently updates from the browser, so the demo `blogpost` table also needs **Update** for *Any*. See [Known limitations](#known-limitations-and-roadmap) for the plan to replace this.
-
-### 3. Add your IDs
-
-The Appwrite IDs are plain constants for now. Set your endpoint and project ID in `src/appwrite/appwrite.js`, then replace the database ID in:
-
-- `src/context/ContextState.jsx`
-- `src/components/CreateBlog.jsx`
-- `src/components/ContactUs.jsx`
-- `src/utils/newsletter.js`
-- `src/utils/views.js`
-
-*Optional, image upload:* export a `storage` instance from `src/appwrite/appwrite.js`, create a public-read bucket, and set `BUCKET_ID` in `CreateBlog.jsx`. Without this, the editor falls back to image URLs.
-
-### 4. Run
-
-```bash
-npm run dev
-```
-
-Open the address printed in the terminal (the Appwrite OAuth redirects use the current origin, so any port works once it is added as a platform).
-
-## Deployment
-
-The app uses client-side routing, so the host must send every path to `index.html`.
-
-- **Vercel** - add `vercel.json`:
-  ```json
-  { "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
-  ```
-- **Netlify** - add `public/_redirects`:
-  ```
-  /*  /index.html  200
-  ```
-
-After deploying, add the live domain under Appwrite *Platforms*.
 
 ## Routes
 
@@ -180,8 +106,8 @@ src/
 
 ## Author
 
-**Suraj Verma** · [GitHub](https://github.com/YOUR-USERNAME) · [LinkedIn](https://www.linkedin.com/in/YOUR-PROFILE)
+**Suraj Verma** · [GitHub](https://github.com/surajverma003) · [LinkedIn](https://www.linkedin.com/in/surajverma003)
 
-## License
+## LICENSE
 
 MIT
